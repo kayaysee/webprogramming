@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" ng-app="pwa2021">
+  <head>
+    <meta charset="utf-8">
+    <title>pwa2021</title>
+    <link rel="stylesheet" href="node_modules/bootstrap3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/pwa2021.css">
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap3/dist/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+      <div class="container" ng-controller="Ctrl as ctrl">
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+
+              <div class="navbar-header">
+
+                  <button type="button" class="navbar-toggle" ng-click="ctrl.isCollapsed = !ctrl.isCollapsed">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+
+              </div>
+
+              <div class="navbar-collapse" ng-class="ctrl.isCollapsed ? 'collapse' : 'in'">
+
+                  <ul class="nav navbar-nav">
+                      <li ng-repeat="menuPos in ctrl.menu" ng-class="ctrl.navClass(menuPos.route)">
+                          <a href="#{{menuPos.route}}" ng-bind-html="menuPos.title"></a>
+                      </li>
+                  </ul>
+
+                  <ul class="nav navbar-nav navbar-right">
+                    <form class="navbar-form">
+                        <div class="form-group" ng-if="!ctrl.lib.login">
+                            <input class="form-control" type="text" placeholder="login" ng-model="ctrl.creds.login"/>
+                            <input class="form-control" type="password" placeholder="password" ng-model="ctrl.creds.password"/>
+                            <button class="btn btn-default fa fa-sign-in" ng-click="ctrl.doLogin()" ng-disabled="!ctrl.creds.login"></button>
+                        </div>
+                        <div class="form-group" ng-if="ctrl.lib.login">
+                            <span class="label label-success" style="font-size: 1em;" ng-bind="ctrl.lib.login"></span>
+                            <button class="btn btn-default fa fa-sign-out" ng-click="ctrl.doLogout()"></button>
+                        </div>
+                    </form>
+                </ul>    
+
+              </div>
+          </div>
+        </nav>
+
+        <div uib-alert class="alert-animated" ng-class="ctrl.lib.alertType()" close="ctrl.lib.alertClose()" dismiss-on-timeout="3000" ng-if="ctrl.lib.alertText()">
+            {{ctrl.lib.alertText()}}
+        </div>
+
+        <div ng-view></div>
+
+      </div>
+
+      <script src="node_modules/angular/angular.min.js"></script>
+      <script src="node_modules/angular-route/angular-route.min.js"></script>
+      <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+      <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+      <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+      <script src="js/app.js"></script>
+      <script src="js/homeCtrl.js"></script>
+      <script src="js/personsCtrl.js"></script>
+      <script src="js/transfersCtrl.js"></script>
+      <script src="js/historyCtrl.js"></script>
+      <script src="js/groupsCtrl.js"></script>
+    </body>
+</html>

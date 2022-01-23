@@ -1,0 +1,26 @@
+<table class="table table-stripped">
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th></th>
+    </tr>        
+    <tr ng-repeat="group in ctrl.groups">
+      <td><span class="badge" ng-bind="$index"></span></td>
+      <td ng-bind="group.name"></td>
+      <td>
+        <div ng-if="ctrl.isAdmin()">
+          <button class="btn btn-danger btn-xs" ng-click="ctrl.delete(group._id)">del</button>
+          <button class="btn btn-primary btn-xs" ng-click="ctrl.copy($index)">copy</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+<div ng-if="ctrl.isAdmin()">
+  <label for="edit_group_data">Edit group data</label>
+  <form id="edit_group_data" class="form form-inline">
+    <input class="form-control" type="text" placeholder="name" ng-model="ctrl.group.name"/>
+    <button class="btn btn-default" ng-click="ctrl.new()" ng-disabled="!ctrl.isGroupDataCorrect()">New</button>
+    <button class="btn btn-default" ng-click="ctrl.modify()" ng-if="ctrl.clickedRow >= 0" ng-disabled="!ctrl.isGroupDataCorrect()">Modify <span class="badge" ng-bind="ctrl.clickedRow"></span></button>
+  </form><br/>
+</div>
